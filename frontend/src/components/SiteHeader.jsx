@@ -31,8 +31,8 @@ export default function SiteHeader() {
               <span className="font-display text-base sm:text-lg font-semibold tracking-tight text-white group-hover:text-accent transition-colors">
                 PumpRisk™
               </span>
-              <span className="rounded border border-emerald-500/30 bg-emerald-500/10 px-1 py-0.5 font-mono text-[9px] sm:text-[10px] font-medium text-emerald-400">
-                LIVE 2026
+              <span className="rounded border border-cyan-500/30 bg-cyan-500/10 px-1 py-0.5 font-mono text-[9px] sm:text-[10px] font-medium text-cyan-400">
+                SNAPSHOT 2026
               </span>
             </div>
             <div className="hidden font-mono text-[9px] sm:block sm:text-[10px] tracking-wider text-slate-400">

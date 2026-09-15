@@ -193,7 +193,7 @@ export default function LeaderboardPage() {
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent live-pulse-radar" />
-                OJK MARKET SURVEILLANCE INTELLIGENCE
+                INDEPENDENT MARKET SURVEILLANCE
               </div>
               <h1 className="mt-5 font-display text-3xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl leading-[1.1]">
                 Statistical Anomaly Surveillance for IDX Micro &amp; Small-Caps

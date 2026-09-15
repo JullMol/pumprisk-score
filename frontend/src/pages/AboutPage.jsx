@@ -158,7 +158,7 @@ export default function AboutPage() {
               Ready to examine the market anomalies?
             </h3>
             <p className="mt-1 text-xs sm:text-sm text-slate-300">
-              Access the live daily surveillance leaderboard of 407 monitored equities.
+              Access the daily surveillance leaderboard of 407 monitored equities.
             </p>
           </div>
           <Link
