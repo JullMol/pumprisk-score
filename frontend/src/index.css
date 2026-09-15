@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS
+   Base: #0D1117 (dark navy charcoal, not pure black)
+   Surface: #161B27
+   Panel: #1C2333
+───────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+  --bg-base:    #0D1117;
+  --bg-surface: #161B27;
+  --bg-panel:   #1C2333;
+  --border-subtle:  rgba(255, 255, 255, 0.09);
+  --border-medium:  rgba(255, 255, 255, 0.14);
+  --border-strong:  rgba(255, 255, 255, 0.20);
+  --text-main:  #E2E8F0;
+  --text-sub:   #94A3B8;
+  --text-muted: #4E6380;
+  --accent-gold: #E5C05B;
+}
+
+/* ─────────────────────────────────────────────
+   FOUNDATION
+───────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-base);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-base);
+  /* Subtle multi-directional ambient glow — gives depth without going neon */
+  background-image:
+    radial-gradient(ellipse 70% 35% at 15% 0%,   rgba(229,192,91,0.07),  transparent),
+    radial-gradient(ellipse 55% 30% at 88% 5%,   rgba(56,189,248,0.06),  transparent),
+    radial-gradient(ellipse 40% 50% at 50% 100%, rgba(52,211,153,0.04),  transparent);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-feature-settings: "tnum" 1, "ss01" 1, "cv02" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─────────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0A0D13; }
+::-webkit-scrollbar-thumb { background: #253045; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: #2E3D56; }
+
+::selection {
+  background: rgba(229, 192, 91, 0.25);
+  color: #fff;
+}
+
+/* ─────────────────────────────────────────────
+   TICKER MARQUEE
+───────────────────────────────────────────── */
+@keyframes tickerSlide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: tickerSlide 50s linear infinite;
+}
+.animate-ticker:hover { animation-play-state: paused; }
+
+/* ─────────────────────────────────────────────
+   LIVE PULSE INDICATOR
+───────────────────────────────────────────── */
+@keyframes pulseRadar {
+  0%   { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.6); }
+  70%  { box-shadow: 0 0 0 5px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+.live-pulse-radar { animation: pulseRadar 2.4s ease-out infinite; }
+
+/* ─────────────────────────────────────────────
+   SCANLINE OVERLAY (very subtle ambient sweep)
+───────────────────────────────────────────── */
+@keyframes scanlineMove {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+.scanline-overlay::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(229,192,91,0.035), rgba(56,189,248,0.035), transparent);
+  animation: scanlineMove 10s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─────────────────────────────────────────────
+   SHIMMER EFFECT
+───────────────────────────────────────────── */
+@keyframes shimmerPass {
+  0%   { transform: translateX(-150%); }
+  100% { transform: translateX(150%); }
+}
+.animate-shimmer { position: relative; overflow: hidden; }
+.animate-shimmer::after {
+  content: "";
+  position: absolute; inset: 0; width: 55%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.035), transparent);
+  animation: shimmerPass 5s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────────
+   COMPONENT LAYER
+───────────────────────────────────────────── */
+@layer components {
+
+  /* Core glass panel — lighter charcoal base, visible border */
+  .glass-panel {
+    @apply rounded-2xl border bg-[#161B27]/90 backdrop-blur-md
+           transition-all duration-300;
+    border-color: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.04) inset;
+  }
+
+  /* Interactive glass panel — hover lifts with stronger border */
+  .glass-panel-interactive {
+    @apply rounded-2xl border bg-[#161B27]/90 backdrop-blur-md
+           transition-all duration-200;
+    border-color: rgba(255, 255, 255, 0.09);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.04) inset;
+  }
+  .glass-panel-interactive:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.06) inset;
+  }
+
+  /* Lighter card variant */
+  .glass-card {
+    @apply rounded-xl border bg-[#1C2333]/70 backdrop-blur-sm;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Pill / badge */
+  .badge-tag {
+    @apply inline-flex items-center gap-1.5 rounded-md px-2.5 py-1
+           text-xs font-medium tracking-wide;
+  }
+
+  /* Terminal / data label */
+  .font-terminal {
+    @apply font-mono tabular-nums tracking-tight;
+  }
+
+  /* Section overline label */
+  .overline-label {
+    @apply font-mono text-[11px] font-semibold uppercase tracking-widest text-accent;
+  }
+
+  /* Data chip — standard metric tile */
+  .data-chip {
+    @apply rounded-xl border p-3 transition-colors duration-200;
+    border-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(28, 35, 51, 0.7);
+  }
+  .data-chip:hover {
+    border-color: rgba(255, 255, 255, 0.14);
+    background-color: rgba(31, 41, 64, 0.8);
+  }
+
+  /* Progress bar track */
+  .bar-track {
+    @apply h-1.5 w-full overflow-hidden rounded-full;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+}

@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+dist/
+dist-ssr/
+build/
+
+# Python & Notebooks
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.ipynb_checkpoints/
+.venv/
+venv/
+env/
+
+# Raw scraping cache & tabular data (keep repo clean)
+cache/
+.cache/
+*.csv
+*.xlsx
+*.parquet
+*.pkl
+*.sqlite
+
+# Product Requirements & Internal Notes
+PRD.md
+
+# Environment & Sensitive Files
+.env
+.env.local
+.env.*.local
+*.log
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+public/data/
