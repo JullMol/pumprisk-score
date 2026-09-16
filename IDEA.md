@@ -4,8 +4,7 @@
 
 This document captures the full reasoning behind PumpRisk Score, from
 problem framing through solution design before any UI/UX or technical
-architecture decisions were made. See [`PRD.md`](./PRD.md) for the
-product/technical spec that follows from this reasoning.
+architecture decisions were made.
 
 ---
 
@@ -179,6 +178,8 @@ crashes (`abs(return_zscore)`), broker dominance score avoids the
 zero-sum trap, a two-stage funnel keeps API cost sustainable, and
 inactive/low-quality data is excluded before scoring.
 
+**Weight sensitivity & robustness**: Because only 27 historical suspension events had sufficient point-in-time data for evaluation, we deliberately avoid fitting the weights to these events. Instead, we use transparent expert-defined weights and test ranking stability under reasonable alternative weighting schemes equal, market-focused, and flow-focused which produced Spearman rank correlations of 0.971–0.989 against the baseline on the 63 confirmed stocks. The weighting should therefore be interpreted as a transparent design choice, not a statistically optimal parameterization.
+
 ---
 
 ## 7. Risk & Mitigation
@@ -187,6 +188,7 @@ inactive/low-quality data is excluded before scoring.
 |---|---|
 | API credit constraints | Precompute once, serve static data not continuous live refresh |
 | Missing data for very small stocks (broker/foreign/news) | Adaptive weighting, fallback to Stage-1-only score with an "Unconfirmed" label |
+| Weight parameterization & overfitting risk | Because only 27 historical suspension events had sufficient point-in-time data for evaluation, we deliberately avoid fitting the weights to these events. Instead, we use transparent expert-defined weights and test ranking stability under reasonable alternative weighting schemes equal, market-focused, and flow-focused which produced Spearman rank correlations of 0.971–0.989 against the baseline on the 63 confirmed stocks. The weighting should therefore be interpreted as a transparent design choice, not a statistically optimal parameterization. |
 | False positives on newly-listed stocks | Exclude stocks with < 30 days of trading history |
 | Legal risk perceived as accusing a stock of manipulation | Neutral statistical language, persistent disclaimer on every output |
 | Single-source dependency on Sectors API | Data cached locally as the product's single source of truth |

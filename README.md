@@ -85,9 +85,6 @@ For the full story problem framing, target users, root-cause analysis,
 three-layer market analysis, and solution design see
 **[`IDEA.md`](./IDEA.md)**.
 
-For the technical product spec architecture, UI/UX, MVP scope, and data
-pipeline see **[`PRD.md`](./PRD.md)**.
-
 ---
 
 ## Validation Snapshot
@@ -112,6 +109,13 @@ reliable point-in-time score. Stocks that IDX independently suspended for
 *"significant cumulative price increases"* scored, on average, more than
 double what a typical trading day looks like using our model, computed
 entirely from Sectors API data.
+
+> **Weight sensitivity**: the 0.40/0.25/0.20/0.15 weighting is expert-defined,
+> not fitted to the suspension events above (fitting against only 27 labeled
+> cases would risk overfitting). Alternative reasonable weighting schemes produced
+> stock rankings with Spearman ρ = 0.971–0.989 against the baseline. The
+> conclusions are robust to the exact weight choice, even though the weights
+> themselves are not claimed to be statistically optimal.
 
 ---
 

@@ -176,11 +176,108 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        {/* Section 3: Empirical Validation & Ground-Truth Suspensions */}
+        {/* Section 03: Weight Sensitivity & Robustness */}
         <section className="space-y-6">
           <div>
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Section 03 · Ground-Truth Validation
+              Section 03 · Robustness Check
+            </span>
+            <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-white">
+              Weight Sensitivity &amp; Ranking Stability
+            </h2>
+            <p className="mt-2 text-xs sm:text-sm text-slate-400 max-w-3xl leading-relaxed">
+              These weights are expert-defined, not fitted to the suspension events used for validation below. Because only 27 historical suspension cases had sufficient point-in-time data for evaluation, deliberately avoiding a weight-fitting exercise against them prevents overfitting to a small labeled sample.
+            </p>
+          </div>
+
+          <div className="glass-panel p-6 sm:p-8 space-y-6">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-3xl">
+              Instead, we tested whether stock rankings stay stable under reasonable alternative weighting schemes. Across three alternatives—equal weighting, market-focused, and flow-focused—rankings on the 63 confirmed stocks stayed highly correlated with the baseline (<strong className="text-accent font-mono">Spearman ρ = 0.971–0.989</strong>), and the top two flagged stocks (<strong className="text-white">JELI</strong> and <strong className="text-white">VINS</strong>) did not change.
+            </p>
+
+            <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#1C2333]/80">
+              <table className="w-full text-left text-xs">
+                <thead className="border-b border-white/[0.08] bg-white/[0.03] font-mono text-[11px] uppercase tracking-wider text-slate-400">
+                  <tr>
+                    <th className="px-5 py-3.5">Weighting Scheme</th>
+                    <th className="hidden px-5 py-3.5 sm:table-cell">Component Allocation</th>
+                    <th className="px-5 py-3.5 text-center">Top 2 Flagged Stocks</th>
+                    <th className="px-5 py-3.5 text-right font-mono">vs. Baseline (ρ)</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/[0.06] text-slate-300">
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="px-5 py-3.5 font-semibold text-white">
+                      Equal Weighting
+                      <div className="sm:hidden mt-1 font-mono text-[10px] text-slate-400">
+                        25% Market · 25% Broker · 25% Foreign · 25% News
+                      </div>
+                    </td>
+                    <td className="hidden px-5 py-3.5 font-mono text-[11px] text-slate-400 sm:table-cell">
+                      25% Market · 25% Broker · 25% Foreign · 25% News
+                    </td>
+                    <td className="px-5 py-3.5 text-center">
+                      <span className="inline-flex items-center gap-1 rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-400 border border-emerald-500/20">
+                        JELI, VINS
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-right font-mono font-bold text-accent">
+                      0.989
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="px-5 py-3.5 font-semibold text-white">
+                      Market-Focused
+                      <div className="sm:hidden mt-1 font-mono text-[10px] text-slate-400">
+                        50% Market · 20% Broker · 15% Foreign · 15% News
+                      </div>
+                    </td>
+                    <td className="hidden px-5 py-3.5 font-mono text-[11px] text-slate-400 sm:table-cell">
+                      50% Market · 20% Broker · 15% Foreign · 15% News
+                    </td>
+                    <td className="px-5 py-3.5 text-center">
+                      <span className="inline-flex items-center gap-1 rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-400 border border-emerald-500/20">
+                        JELI, VINS
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-right font-mono font-bold text-accent">
+                      0.971
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-white/[0.02] transition-colors">
+                    <td className="px-5 py-3.5 font-semibold text-white">
+                      Flow-Focused
+                      <div className="sm:hidden mt-1 font-mono text-[10px] text-slate-400">
+                        25% Market · 35% Broker · 25% Foreign · 15% News
+                      </div>
+                    </td>
+                    <td className="hidden px-5 py-3.5 font-mono text-[11px] text-slate-400 sm:table-cell">
+                      25% Market · 35% Broker · 25% Foreign · 15% News
+                    </td>
+                    <td className="px-5 py-3.5 text-center">
+                      <span className="inline-flex items-center gap-1 rounded bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-400 border border-emerald-500/20">
+                        JELI, VINS
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-right font-mono font-bold text-accent">
+                      0.989
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="rounded-xl border border-accent/20 bg-accent/[0.03] p-4 text-xs leading-relaxed text-slate-300">
+              <strong className="text-accent">Methodological Principle:</strong> This weighting scheme should be interpreted as a transparent design choice, <strong className="text-white">not a statistically optimal parameterization</strong>. Prioritizing robustness and explainability over curve-fitting preserves generalization across future trading regimes.
+            </div>
+          </div>
+        </section>
+
+        {/* Section 04: Empirical Validation & Ground-Truth Suspensions */}
+        <section className="space-y-6">
+          <div>
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+              Section 04 · Ground-Truth Validation
             </span>
             <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-white">
               Backtested Against 27 Real IDX Trading Suspensions
@@ -233,11 +330,11 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        {/* Section 4: Calibrated Thresholds */}
+        {/* Section 05: Calibrated Thresholds */}
         <section className="space-y-6">
           <div>
             <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
-              Section 04 · Threshold Calibration
+              Section 05 · Threshold Calibration
             </span>
             <h2 className="mt-1 font-display text-2xl sm:text-3xl font-bold text-white">
               Empirical Cutoffs (No Arbitrary Guesswork)
@@ -287,14 +384,19 @@ export default function MethodologyPage() {
           </div>
         </section>
 
-        {/* Section 5: Honest Limitations */}
-        <section className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-6 space-y-3">
-          <h3 className="font-display text-lg font-semibold text-white">
-            Methodological Limitations & Caveats
-          </h3>
-          <p className="text-xs leading-relaxed text-slate-300">
+        {/* Section 06: Honest Limitations */}
+        <section className="space-y-4">
+          <div>
+            <span className="font-mono text-xs font-semibold uppercase tracking-wider text-slate-400">
+              Section 06 · Caveats
+            </span>
+            <h2 className="mt-1 font-display text-2xl font-bold text-white">
+              Methodological Limitations &amp; Caveats
+            </h2>
+          </div>
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-6 text-xs leading-relaxed text-slate-300">
             Not all historical suspensions trigger the highest tier. For instance, FLMC and COAL were suspended due to going-concern uncertainties and delayed financial disclosures rather than aggressive price/volume ramps. The model intentionally distinguishes between trading-driven anomalies and corporate legal issues.
-          </p>
+          </div>
         </section>
       </main>
 
