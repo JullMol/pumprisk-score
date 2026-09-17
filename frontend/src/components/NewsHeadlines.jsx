@@ -1,42 +1,75 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-// Curated high-resolution editorial imagery tailored for Indonesian corporate & market news
+// Verified high-resolution editorial imagery tailored for Indonesian corporate & financial news
 const TOPIC_IMAGES = {
-  textile: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=600&auto=format&fit=crop&q=80",
-  telecom: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop&q=80",
-  hotel: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&auto=format&fit=crop&q=80",
-  mining: "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?w=600&auto=format&fit=crop&q=80",
-  banking: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=600&auto=format&fit=crop&q=80",
-  regulatory: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&auto=format&fit=crop&q=80",
-  chart: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80",
-  trading: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=600&auto=format&fit=crop&q=80",
+  chart: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format&fit=crop&q=80",
+  analytics: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80",
+  trading: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&auto=format&fit=crop&q=80",
+  screen: "https://images.unsplash.com/photo-1535320903710-d993d3d77d29?w=800&auto=format&fit=crop&q=80",
+  regulatory: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&auto=format&fit=crop&q=80",
+  corporate: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&auto=format&fit=crop&q=80",
+  food: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80",
+  textile: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&auto=format&fit=crop&q=80",
+  telecom: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80",
+  hotel: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=80",
+  industry: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=800&auto=format&fit=crop&q=80",
+  banking: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&auto=format&fit=crop&q=80",
 };
 
+const FINANCIAL_ROTATION = [
+  TOPIC_IMAGES.chart,
+  TOPIC_IMAGES.analytics,
+  TOPIC_IMAGES.trading,
+  TOPIC_IMAGES.screen,
+  TOPIC_IMAGES.corporate,
+];
+
 // Select realistic topic thumbnail based on title, URL, or publisher
-function getCuratedImage(title = "", url = "") {
+function getCuratedImage(title = "", url = "", index = 0) {
   const text = `${title} ${url}`.toLowerCase();
-  if (text.includes("tekstil") || text.includes("textile") || text.includes("seragam") || text.includes("bell")) {
-    return TOPIC_IMAGES.textile;
-  }
-  if (text.includes("telekomunikasi") || text.includes("infrastruktur") || text.includes("chip") || text.includes("bach")) {
-    return TOPIC_IMAGES.telecom;
-  }
-  if (text.includes("hotel") || text.includes("dfam") || text.includes("pariwisata")) {
-    return TOPIC_IMAGES.hotel;
-  }
-  if (text.includes("tambang") || text.includes("nikel") || text.includes("tins") || text.includes("coal")) {
-    return TOPIC_IMAGES.mining;
-  }
-  if (text.includes("reksadana") || text.includes("syariah") || text.includes("fund") || text.includes("bank") || text.includes("bca")) {
-    return TOPIC_IMAGES.banking;
-  }
-  if (text.includes("idx") || text.includes("ksei") || text.includes("announcement") || text.includes("klarifikasi") || text.includes(".pdf")) {
+
+  // 1. Regulatory / Exchange announcement / Legal disclosure
+  if (text.includes("klarifikasi") || text.includes("suspensi") || text.includes("bursa efek") || text.includes("keterbukaan") || text.includes("ojk") || text.includes("bei") || text.includes("ksei") || text.includes("regulator") || text.includes(".pdf")) {
     return TOPIC_IMAGES.regulatory;
   }
-  if (text.includes("anjlok") || text.includes("menguat") || text.includes("ihsg") || text.includes("rekomendasi")) {
-    return TOPIC_IMAGES.chart;
+
+  // 2. Broad Market Commentary, Analyst Recommendations, Sekuritas
+  if (text.includes("ihsg") || text.includes("rekomendasi") || text.includes("sekuritas") || text.includes("danareksa") || text.includes("analis") || text.includes("target price") || text.includes("indeks") || text.includes("menguat") || text.includes("rally") || text.includes("bursa")) {
+    return FINANCIAL_ROTATION[index % FINANCIAL_ROTATION.length];
   }
-  return TOPIC_IMAGES.trading;
+
+  // 3. Specific Consumer & Emiten Products
+  if (text.includes("niramas") || text.includes("inaco") || text.includes("makanan") || text.includes("minuman") || text.includes("food") || text.includes("beverage") || text.includes("kuliner") || text.includes("snack") || text.includes("f&b")) {
+    return TOPIC_IMAGES.food;
+  }
+
+  // 4. Textile & Garment
+  if (text.includes("tekstil") || text.includes("textile") || text.includes("seragam") || text.includes("bell") || text.includes("garmen")) {
+    return TOPIC_IMAGES.textile;
+  }
+
+  // 5. Telecom & Tech
+  if (text.includes("telekomunikasi") || text.includes("infrastruktur") || text.includes("chip") || text.includes("datacenter") || text.includes("fiber") || text.includes("digital") || text.includes("telco")) {
+    return TOPIC_IMAGES.telecom;
+  }
+
+  // 6. Hospitality & Tourism
+  if (text.includes("hotel") || text.includes("dfam") || text.includes("pariwisata") || text.includes("wisata") || text.includes("resort")) {
+    return TOPIC_IMAGES.hotel;
+  }
+
+  // 7. Mining, Metals, Energy
+  if (text.includes("tambang") || text.includes("nikel") || text.includes("batubara") || text.includes("coal") || text.includes("emas") || text.includes("minyak") || text.includes("energy") || text.includes("smelter")) {
+    return TOPIC_IMAGES.industry;
+  }
+
+  // 8. Banking & Funds
+  if (text.includes("reksadana") || text.includes("syariah") || text.includes("fund") || text.includes("bank") || text.includes("bca") || text.includes("finansial")) {
+    return TOPIC_IMAGES.banking;
+  }
+
+  // Rotating fallback among verified financial visuals
+  return FINANCIAL_ROTATION[index % FINANCIAL_ROTATION.length];
 }
 
 // Clean publisher display name
@@ -57,40 +90,18 @@ function getPublisherInfo(url = "") {
   }
 }
 
-// Single rich OG link preview card
+// Single rich editorial news card
 function NewsCard({ item, index }) {
-  const [ogData, setOgData] = useState(null);
-  const [imgSrc, setImgSrc] = useState(item.image || getCuratedImage(item.title, item.url));
+  const initialImg = (item.image && !item.image.toLowerCase().includes("404"))
+    ? item.image
+    : getCuratedImage(item.title, item.url, index);
+
+  const [imgSrc, setImgSrc] = useState(initialImg);
   const pub = getPublisherInfo(item.url);
   const favicon = `https://www.google.com/s2/favicons?domain=${pub.host}&sz=32`;
 
-  useEffect(() => {
-    // Attempt fast Microlink fetch if URL is available
-    if (!item.url || item.image) return;
-    const ctrl = new AbortController();
-    const timeout = setTimeout(() => ctrl.abort(), 2500);
-
-    fetch(`https://api.microlink.io/?url=${encodeURIComponent(item.url)}`, { signal: ctrl.signal })
-      .then((r) => r.json())
-      .then((json) => {
-        if (json.status === "success" && json.data) {
-          setOgData(json.data);
-          if (json.data.image?.url) {
-            setImgSrc(json.data.image.url);
-          }
-        }
-      })
-      .catch(() => {})
-      .finally(() => clearTimeout(timeout));
-
-    return () => {
-      clearTimeout(timeout);
-      ctrl.abort();
-    };
-  }, [item.url, item.image]);
-
-  const displayTitle = ogData?.title || item.title || "Corporate Announcement";
-  const displayDescription = ogData?.description || item.description || null;
+  const displayTitle = item.title || "Corporate Announcement";
+  const displayDescription = item.description || null;
 
   return (
     <a
@@ -109,8 +120,8 @@ function NewsCard({ item, index }) {
           loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           onError={() => {
-            // Fallback gracefully to curated image on broken URL
-            setImgSrc(getCuratedImage(item.title, item.url));
+            // Immediate graceful fallback to rotating verified financial visual
+            setImgSrc(FINANCIAL_ROTATION[(index + 1) % FINANCIAL_ROTATION.length]);
           }}
         />
 
@@ -118,8 +129,10 @@ function NewsCard({ item, index }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#161B26] via-transparent to-black/30" />
 
         {/* Top Floating Badge: Publisher */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5 rounded-md border backdrop-blur-md px-2 py-1 text-[10px] font-medium shadow-sm"
-             style={{ backgroundColor: "rgba(13, 17, 23, 0.8)" }}>
+        <div
+          className="absolute top-3 left-3 flex items-center gap-1.5 rounded-md border backdrop-blur-md px-2 py-1 text-[10px] font-medium shadow-sm"
+          style={{ backgroundColor: "rgba(13, 17, 23, 0.85)" }}
+        >
           <img
             src={favicon}
             alt=""
